@@ -1,0 +1,83 @@
+from IPython.display import display, HTML
+
+html_content = '''
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(rgb(123, 184, 104), rgb(13, 87, 10));
+            font-size: 2rem;
+            font-family: sans-serif;
+            color: rgb(7, 9, 10);
+        }
+        .container {
+            height: 20rem;
+            width: 15rem;
+            background-color: rgb(152, 228, 165);
+            text-align: center;
+            padding-top: 12px;
+            border-radius: 16px;
+            border: 2px solid rgb(14, 43, 1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">---</div>
+        <div class="temp">-°C</div>
+        <div class="summary">----</div>
+        <div class="location"></div>
+    </div>
+
+    <script>
+        const apiKey = 'YOUR_API_KEY_HERE';  // Replace with your OpenWeatherMap API key
+
+        const icon = document.querySelector('.icon');
+        const temp = document.querySelector('.temp');
+        const summary = document.querySelector('.summary');
+        const locationElement = document.querySelector('.location');
+
+        function getWeather(city) {
+            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.cod === 200) {
+                        const iconUrl = `http://openweathermap.org/img/wn/${data.weather[0].icon}.png`;
+                        icon.innerHTML = `<img src="${iconUrl}" alt="Weather Icon">`;
+
+                        temp.textContent = `${Math.round(data.main.temp)}\u00B0C`;  // Degree symbol
+                        summary.textContent = data.weather[0].description;
+                        locationElement.textContent = `${data.name}, ${data.sys.country}`;
+                    } else {
+                        alert('Weather data not found for this city.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching weather data:', error);
+                    alert('Failed to fetch weather data.');
+                });
+        }
+
+        getWeather('New York');  // You can change this to any city you want
+    </script>
+</body>
+</html>
+'''
+
+# Display the HTML content in Google Colab
+display(HTML(html_content))
