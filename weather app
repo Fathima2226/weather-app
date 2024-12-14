@@ -45,7 +45,7 @@ html_content = '''
     </div>
 
     <script>
-        const apiKey = 'YOUR_API_KEY_HERE';  // Replace with your OpenWeatherMap API key
+        const apiKey = 'YOUR_API_KEY_HERE';  
 
         const icon = document.querySelector('.icon');
         const temp = document.querySelector('.temp');
@@ -60,7 +60,7 @@ html_content = '''
                         const iconUrl = `http://openweathermap.org/img/wn/${data.weather[0].icon}.png`;
                         icon.innerHTML = `<img src="${iconUrl}" alt="Weather Icon">`;
 
-                        temp.textContent = `${Math.round(data.main.temp)}\u00B0C`;  // Degree symbol
+                        temp.textContent = `${Math.round(data.main.temp)}\u00B0C`;  
                         summary.textContent = data.weather[0].description;
                         locationElement.textContent = `${data.name}, ${data.sys.country}`;
                     } else {
@@ -73,11 +73,11 @@ html_content = '''
                 });
         }
 
-        getWeather('New York');  // You can change this to any city you want
+        getWeather('New York'); 
     </script>
 </body>
 </html>
 '''
 
-# Display the HTML content in Google Colab
+
 display(HTML(html_content))
